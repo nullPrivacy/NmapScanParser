@@ -69,4 +69,14 @@ class Reporter:
             file.write(f"Service: {self.__reporter_list.service}\n")
             file.write(f"---\n")
 
+class Manager:
+    def __init__(self):
+        self.__scanner = Scanner()
+        self.__parser = Parser()
+        self.__reporter = Reporter()
+        self.__usr_ip
+        self._usr_filename
+        self.__report = []
 
+    def input_ip(self) -> bool:
+        return True;   
