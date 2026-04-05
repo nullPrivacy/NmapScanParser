@@ -1,5 +1,5 @@
 #James McKinley
-#NmapParser Poject
+#NmapParser Poject v0.1.0
 from dataclasses import dataclass
 import subprocess 
 import xml.etree.ElementTree as ET
@@ -33,9 +33,22 @@ class Scanner:
         self.__scanner_ip = usr_ip
         self.__scanner_filename = usr_filename
 
-    #Need process for invalid ip or filename response
-    def scan_xml(self):
-        subprocess.run(["nmap", "-sV", "-oX", f"{self.__scanner_filename}.xml", f"{self.__scanner_ip}"])
+    #Need process for invalid ip or filename response: Adding parameter to look for amount
+    #of connected hosts, if zero hosts end process and return value to dictate.
+    def scan_xml(self)-> int:
+        result = subprocess.run(["nmap", "-sV", "-oX", f"{self.__scanner_filename}.xml", f"{self.__scanner_ip}"], capture_output = True, text=True)
+        if result.returncode == 0:
+        #If zero(Success) check output for hosts
+        #Catch raise value error here-> catch when inputhelper invoked
+            if "(0 hosts up)" in result.stdout:
+                raise ValueError("No Hosts Available")
+                #return 1
+            else:
+                return 0 
+        else:
+        #else (Failure) dont check output, dont invoke parser.
+            return 1
+        
             
 class Parser:
     def __init__(self, usr_filename: str):
@@ -95,7 +108,11 @@ class Manager:
             self.__usr_ip = in_handler.get_input_ip()
             self.__usr_filename = in_handler.get_input_file()
             scanner = Scanner(self.__usr_ip, self.__usr_filename)
-            scanner.scan_xml()
+            try:
+                scanner.scan_xml()
+                ##break
+            except ValueError as e:
+                print(f"Unable to generate report: {e}")
             parser = Parser(self.__usr_filename)
             self.__report = parser.parse_xml_port()
             reporter = Reporter(self.__usr_filename, self.__report)
