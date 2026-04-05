@@ -4,6 +4,11 @@ from dataclasses import dataclass
 import subprocess 
 import xml.etree.ElementTree as ET
 
+######Constants
+MAX_ATTEMPTS = 3
+NMAP_COMMAND = 'nmap'
+NMAP_ARG1 = '-sV'
+NMAP_ARG2 = '-oX'
 ######Helper Classes
 #Class decorator requied to use syntax
 @dataclass(frozen=True)     
@@ -16,6 +21,7 @@ class ParserResult:
     name:str
     method:str
     conf:str
+
 
 class InputHandler:
     ##Need to find better solution for return condition
@@ -36,13 +42,15 @@ class Scanner:
     #Need process for invalid ip or filename response: Adding parameter to look for amount
     #of connected hosts, if zero hosts end process and return value to dictate.
     def scan_xml(self)-> int:
-        result = subprocess.run(["nmap", "-sV", "-oX", f"{self.__scanner_filename}.xml", f"{self.__scanner_ip}"], capture_output = True, text=True)
+        result = subprocess.run([NMAP_COMMAND, NMAP_ARG1, NMAP_ARG2,
+                                    f"{self.__scanner_filename}.xml", 
+                                    f"{self.__scanner_ip}"], 
+                                capture_output = True, text=True)
         if result.returncode == 0:
         #If zero(Success) check output for hosts
         #Catch raise value error here-> catch when inputhelper invoked
             if "(0 hosts up)" in result.stdout:
                 raise ValueError("No Hosts Available")
-                #return 1
             else:
                 return 0 
         else:
