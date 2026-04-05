@@ -29,6 +29,23 @@ def setup_fn_fail():
     file = "/@"
     return ip, file
 
+@pytest.fixture
+def setup_noip_fail():
+    ip =  ""
+    file = "GoodFileName"
+    return ip, file
+
+    
+
+## INPUT HANDLER CLASS TEST
+#***************************
+def test_ihip_fail(setup_noip_fail):
+    ip, file = setup_noip_fail
+
+    in_hand = InputHandler(ip, file)
+    with pytest.raises(ValueError, match = "No IP address entered"):
+        in_hand.get_input_ip()
+
 ## SCANNER CLASS TEST
 #*********************
 

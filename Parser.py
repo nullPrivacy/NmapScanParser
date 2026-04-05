@@ -27,6 +27,8 @@ class InputHandler:
     ##Need to find better solution for return condition
     def get_input_ip(self) -> str:
         usr_ip = input(f"Enter the IP you would like to scan: ")
+        if usr_ip is None:
+            raise ValueError("No IP address entered")
         return usr_ip
 
     def get_input_file(self) -> str:
@@ -39,16 +41,12 @@ class Scanner:
         self.__scanner_ip = usr_ip
         self.__scanner_filename = usr_filename
 
-    #Need process for invalid ip or filename response: Adding parameter to look for amount
-    #of connected hosts, if zero hosts end process and return value to dictate.
     def scan_xml(self)-> int:
         result = subprocess.run([NMAP_COMMAND, NMAP_ARG1, NMAP_ARG2,
-                                    f"{self.__scanner_filename}.xml", 
-                                    f"{self.__scanner_ip}"], 
+                                 f"{self.__scanner_filename}.xml", 
+                                 f"{self.__scanner_ip}"], 
                                 capture_output = True, text=True)
         if result.returncode == 0:
-        #If zero(Success) check output for hosts
-        #Catch raise value error here-> catch when inputhelper invoked
             if "(0 hosts up)" in result.stdout:
                 raise ValueError("No Hosts Available")
             else:
