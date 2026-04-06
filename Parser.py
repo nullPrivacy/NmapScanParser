@@ -24,12 +24,16 @@ class ParserResult:
 
 
 class InputHandler:
+    #def __init__(self):
+        #self.__usr_ip = None
+
     ##Need to find better solution for return condition
     def get_input_ip(self) -> str:
         usr_ip = input(f"Enter the IP you would like to scan: ")
-        if usr_ip is None:
+        if not usr_ip or not isinstance(usr_ip, str):
             raise ValueError("No IP address entered")
-        return usr_ip
+        else:
+            return usr_ip
 
     def get_input_file(self) -> str:
         usr_filename = input(f"Enter the FILE NAME you would like to scan: ")
@@ -60,7 +64,6 @@ class Parser:
     def __init__(self, usr_filename: str):
         self.__parser_filename = usr_filename
         self.__parser_list = []
-
     #Thinking of renaming to better fit the nmap argument description "-sV"
     def parse_xml_port(self) -> list:      
         tree = ET.parse(f"{self.__parser_filename}.xml")
@@ -111,12 +114,12 @@ class Manager:
     #Need better return
     def run_scan_port(self) -> bool:
             in_handler = InputHandler()
-            self.__usr_ip = in_handler.get_input_ip()
-            self.__usr_filename = in_handler.get_input_file()
-            scanner = Scanner(self.__usr_ip, self.__usr_filename)
             try:
+                self.__usr_ip = in_handler.get_input_ip()
+                self.__usr_filename = in_handler.get_input_file()
+                scanner = Scanner(self.__usr_ip, self.__usr_filename)
                 scanner.scan_xml()
-                ##break
+                    ##break
             except ValueError as e:
                 print(f"Unable to generate report: {e}")
             parser = Parser(self.__usr_filename)

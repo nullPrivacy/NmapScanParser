@@ -34,18 +34,36 @@ def setup_noip_fail():
     ip =  ""
     file = "GoodFileName"
     return ip, file
-
-    
+'''
+@pytest.fixture
+def setup_fake():
+    return "127.0.0.1"
+'''
 
 ## INPUT HANDLER CLASS TEST
 #***************************
-def test_ihip_fail(setup_noip_fail):
-    ip, file = setup_noip_fail
+def test_ihip_pass(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "127.0.0.1")
+    obj = InputHandler()
+    
+    result = obj.get_input_ip()
+    assert result  == "127.0.0.1"
+    
+    ''' 
+    #Achieves the same input as the lambda (more explicit) as 2nd patch arg
 
-    in_hand = InputHandler(ip, file)
+    def setup_fake(self)->str:
+        return "127.0.0.1"
+
+    '''
+
+def test_ihip_fail(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: None)
+    obj = InputHandler()
+    
     with pytest.raises(ValueError, match = "No IP address entered"):
-        in_hand.get_input_ip()
-
+        _ = obj.get_input_ip()
+  
 ## SCANNER CLASS TEST
 #*********************
 
