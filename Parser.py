@@ -9,6 +9,8 @@ MAX_ATTEMPTS = 3
 NMAP_COMMAND = 'nmap'
 NMAP_ARG1 = '-sV'
 NMAP_ARG2 = '-oX'
+
+
 ######Helper Classes
 #Class decorator requied to use syntax
 @dataclass(frozen=True)     
@@ -24,20 +26,18 @@ class ParserResult:
 
 
 class InputHandler:
-    #def __init__(self):
-        #self.__usr_ip = None
-
-    ##Need to find better solution for return condition
     def get_input_ip(self) -> str:
         usr_ip = input(f"Enter the IP you would like to scan: ")
         if not usr_ip or not isinstance(usr_ip, str):
             raise ValueError("No IP address entered")
-        else:
-            return usr_ip
+        return usr_ip
 
     def get_input_file(self) -> str:
         usr_filename = input(f"Enter the FILE NAME you would like to scan: ")
+        if not usr_filename or not isinstance(usr_filename,str):
+            raise ValueError("No file name entered")
         return usr_filename 
+
 
 ######Main Classes
 class Scanner:
@@ -53,32 +53,35 @@ class Scanner:
         if result.returncode == 0:
             if "(0 hosts up)" in result.stdout:
                 raise ValueError("No Hosts Available")
-            else:
-                return 0 
-        else:
+            return 0 
         #else (Failure) dont check output, dont invoke parser.
-            return 1
+        return 1
         
             
 class Parser:
     def __init__(self, usr_filename: str):
         self.__parser_filename = usr_filename
         self.__parser_list = []
-    #Thinking of renaming to better fit the nmap argument description "-sV"
+
     def parse_xml_port(self) -> list:      
         tree = ET.parse(f"{self.__parser_filename}.xml")
         root = tree.getroot()
-
         for port in root.iter('port'):
             result = ParserResult( 
-                protocol = port.get('protocol'),#if port.find('protocol') is not None else "unkown",
-                port_id = port.get('portid'),#if port.find('portid') is not None else "unkown",
-                state = port.find('state').get('state')if port.find('state') is not None else "unkown",
-                reason = port.find('state').get('reason')if port.find('state') is not None else "unkown",
-                reason_ttl = port.find('state').get('reason_ttl')if port.find('state') is not None else "unkown",
-                name = port.find('service').get('name')if port.find('service') is not None else "unkown",
-                method = port.find('service').get('method')if port.find('service') is not None else "unkown",
-                conf = port.find('service').get('conf')if port.find('service') is not None else "unkown"
+                protocol = port.get('protocol'),
+                port_id = port.get('portid'),
+                state = port.find('state').get('state') 
+                    if port.find('state') is not None else "unkown",
+                reason = port.find('state').get('reason')
+                    if port.find('state') is not None else "unkown",
+                reason_ttl = port.find('state').get('reason_ttl')
+                    if port.find('state') is not None else "unkown",
+                name = port.find('service').get('name')
+                    if port.find('service') is not None else "unkown",
+                method = port.find('service').get('method')
+                    if port.find('service') is not None else "unkown",
+                conf = port.find('service').get('conf')
+                    if port.find('service') is not None else "unkown"
             )
             self.__parser_list.append(result)
         return self.__parser_list
@@ -109,24 +112,24 @@ class Manager:
         self.__usr_ip = None
         self.__usr_filename = None
 
-        #self.__parser = Parser()
-
     #Need better return
     def run_scan_port(self) -> bool:
             in_handler = InputHandler()
+
             try:
                 self.__usr_ip = in_handler.get_input_ip()
                 self.__usr_filename = in_handler.get_input_file()
                 scanner = Scanner(self.__usr_ip, self.__usr_filename)
-                scanner.scan_xml()
-                    ##break
+                if scanner.scan_xml() is True:
+                    parser = Parser(self.__usr_filename)
+                    self.__report = parser.parse_xml_port()
+                    reporter = Reporter(self.__usr_filename, self.__report)
+                    reporter.write_xml_txt()
+                    return True
+                else:
+                    return False
             except ValueError as e:
                 print(f"Unable to generate report: {e}")
-            parser = Parser(self.__usr_filename)
-            self.__report = parser.parse_xml_port()
-            reporter = Reporter(self.__usr_filename, self.__report)
-            reporter.write_xml_txt()
-            return True
 #####MAIN
 def main():
     manager = Manager()

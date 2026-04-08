@@ -57,13 +57,28 @@ def test_ihip_pass(monkeypatch):
 
     '''
 
-def test_ihip_fail(monkeypatch):
+def test_ihip_empty(monkeypatch):
     monkeypatch.setattr('builtins.input', lambda _: None)
     obj = InputHandler()
     
     with pytest.raises(ValueError, match = "No IP address entered"):
         _ = obj.get_input_ip()
   
+def test_ihfn_pass(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "GoodFileName")
+    obj = InputHandler()
+    
+    result = obj.get_input_file()
+    assert result  == "GoodFileName"
+
+def test_ihfn_empty(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: None)
+    obj = InputHandler()
+    
+    with pytest.raises(ValueError, match= "No file name entered"):
+        _= obj.get_input_file()        
+         
+    
 ## SCANNER CLASS TEST
 #*********************
 
