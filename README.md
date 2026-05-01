@@ -81,8 +81,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `nullPrivacy`, `NmapScanParser`, `twitter_handle`, `james-mckinley-9ba50b1a1`, `gmail`, `0xJammes`, `Nmap Scan Parser`, `Test description for project`, `project_license`
-
+Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
