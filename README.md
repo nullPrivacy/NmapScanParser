@@ -32,6 +32,7 @@
 <div align="center">
   <a href="https://github.com/nullPrivacy/NmapScanParser">
   </a>
+  
 
 <h3 align="center">Nmap Scan Parser</h3>
 
@@ -83,7 +84,11 @@ This project is mostly for my own interest, development, and discovery into cybe
 - Provides a shortcut to produce clean professional output of current network activity for projects, stakeholders, dashboards, or any other relevant use.
 - I always wanted to know what its like to write a good script and even more so what it takes to make one that is simple and efficient. 
 - Exploring unit testing with Pytest as a component of software development. I want to use this project as a stepping stone to developing consistent and robust testing alongside the software that I write. I will be exploring different methods to imitate the various methods of input necessary to test the input of my functions. Features of Pytest like monkeywrench introduce me to new libraries and features that help build upon the fundamental testing principle I have established.   
-- Complete supporting documentation (Eventually). I will use this project to refine my ability to write supporting technical documents such as algorithms, process maps, flow charts, schematics, README's, testing evaluations, and anything else I may find helpful to practice and add. 
+- Complete supporting documentation (Eventually). I will use this project to refine my ability to write supporting technical documents such as algorithms, process maps, flow charts, schematics, README's, testing evaluations, and anything else I may find helpful to practice and add.
+
+## Process Map
+
+![Project Architecture](NmapParserProcessMap.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
