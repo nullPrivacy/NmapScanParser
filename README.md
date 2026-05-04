@@ -88,7 +88,7 @@ This project is mostly for my own interest, development, and discovery into cybe
 
 ## Process Map
 
-![Project Architecture](images/NmapParserProcessMap.png)
+![Project Architecture](Images/NmapParserProcessMap.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
