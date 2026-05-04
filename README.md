@@ -79,8 +79,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 This project is mostly for my own interest, development, and discovery into cybersecurity tools and research. The highlights of this program pertain to concepts, tools, and insights I learned  while working on this project. My highlights include:
 - Provides a shortcut to produce clean professional output of current network activity for projects, stakeholders, dashboards, or any other relevant use.
 - I always wanted to know what its like to write a good script and even more so what it takes to make one that is simple and efficient. 
@@ -97,7 +95,6 @@ This project is mostly for my own interest, development, and discovery into cybe
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
