@@ -34,7 +34,7 @@
   </a>
   
 
-<h3 align="center">Nmap Scan Parser</h3>
+<h3 align="center">Nmap Scan Parser (In Development)</h3>
 
   <p align="center">
     Test description for project
@@ -87,7 +87,7 @@ This project is mostly for my own interest, development, and discovery into cybe
 - Complete supporting documentation (Eventually). I will use this project to refine my ability to write supporting technical documents such as algorithms, process maps, flow charts, schematics, README's, testing evaluations, and anything else I may find helpful to practice and add.
 
 ## Process Map
-
+(Rough Draft)
 ![Project Architecture](Images/NmapParserProcessMap.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -198,9 +198,7 @@ Project Link: [https://github.com/nullPrivacy/NmapScanParser](https://github.com
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* []()Remi my cute fart butt dog.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
